@@ -17,8 +17,11 @@ export class App {
             const username = usernameInput.val();
             if (!self.valid_Input(usernameInput)) return;
 
-            let history = '';
+            $('.loader').removeClass("is-hidden");
+            $('.profile-container').addClass("is-hidden");
+            $('.events-container').addClass("is-hidden");
 
+            let history = '';
             getGithubUserEvents(usernameInput.val())
                 .then(arr => {
                     arr.forEach(historyElem => {
@@ -45,6 +48,10 @@ export class App {
                     });
 
                     $('.timeline').html(history);
+
+                    $('.loader').addClass("is-hidden");
+                    $('.profile-container').removeClass("is-hidden");
+                    $('.events-container').removeClass("is-hidden");
                 });
 
             getGithubUserInfo(usernameInput.val())
