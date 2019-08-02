@@ -1,6 +1,18 @@
 @import "~bulma";
 @import "~bulma-timeline";
 
+@mixin medium-screen {
+  @media (min-width: 768px) {
+    @content;
+  }
+}
+
+@mixin large-screen {
+  @media (min-width: 1280px) {
+    @content;
+  }
+}
+
 .navbar {
     border-bottom: 1px solid #eee;
     margin-bottom: 8px;
@@ -20,4 +32,16 @@
 
 .invalid {
   border: 2px solid red !important;
+}
+
+.profile-container {
+
+  @include medium-screen {
+    width: 50%;
+  }
+
+  @include large-screen {
+    width: 30%;
+  }
+  
 }
