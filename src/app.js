@@ -6,24 +6,43 @@ export class App {
     initializeApp() {
         let self = this;
 
-        $('.load-username').on('click', function(e) {
-            let userName = $('.username.input').val();
+        $('.username').on('input focusout', function() {
+            const usernameInput = $(this);
+            self.valid_Input(usernameInput);
+        });
 
-            fetch('https://api.github.com/users/' + userName)
+        $('.load-username').on('click', function(e) {
+            const usernameInput = $('.username');
+            const username = usernameInput.val();
+            if (!self.valid_Input(usernameInput)) return;
+
+            fetch('https://api.github.com/users/' + username)
                 .then((response) => response.json())
-                .then(function(body) {
-                    self.profile = body;
-                    self.update_profile();
+                .then(function(response) {
+                    //self.profile = body;
+                    self.update_profile(response);
                 })
 
-        })
-
+        });
     }
 
-    update_profile() {
-        $('#profile-name').text($('.username.input').val())
-        $('#profile-image').attr('src', this.profile.avatar_url)
-        $('#profile-url').attr('href', this.profile.html_url).text(this.profile.login)
-        $('#profile-bio').text(this.profile.bio || '(no information)')
+    valid_Input(usernameInput) {
+        const reg = /^[a-z0-9\-_]+$/;
+        const is_correct = reg.test(usernameInput.val());
+
+        if (is_correct) {
+            usernameInput.removeClass("invalid");
+            return true;
+        } else {
+            usernameInput.addClass("invalid");
+            return false;
+        }
+    }
+
+    update_profile(newProfile) {
+        $('#profile-name').text($('.username.input').val());
+        $('#profile-image').attr('src', newProfile.avatar_url);
+        $('#profile-url').attr('href', newProfile.html_url).text(newProfile.login);
+        $('#profile-bio').text(newProfile.bio || '(no information)');
     }
 }
