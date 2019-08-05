@@ -1,4 +1,3 @@
-// import styles from './assets/scss/app.scss';
 import './assets/scss/app.scss';
 import 'whatwg-fetch';
 import 'promise-polyfill/src/polyfill';

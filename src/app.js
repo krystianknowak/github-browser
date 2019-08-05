@@ -1,4 +1,3 @@
-// import './assets/scss/app.scss';
 import { getGithubUserEvents, getGithubUserInfo } from './modules/github/service';
 import formatDate from './modules/date/service';
 import $ from 'cash-dom';
@@ -22,7 +21,7 @@ export class App {
             $('.events-container').addClass("is-hidden");
 
             let history = '';
-            getGithubUserEvents(usernameInput.val())
+            getGithubUserEvents(username)
                 .then(arr => {
                     arr.forEach(historyElem => {
                         history += `
@@ -54,7 +53,7 @@ export class App {
                     $('.events-container').removeClass("is-hidden");
                 });
 
-            getGithubUserInfo(usernameInput.val())
+            getGithubUserInfo(username)
                 .then(function(res) {
                     self.update_profile(res);
                 });
